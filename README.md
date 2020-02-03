@@ -1,3 +1,5 @@
+git clone https://github.com/neotkm/k8s_demo  
+
 pod-test.yaml - описание контейнера  
 svc-test.yaml - описание сервиса  
 ingress-test.yaml - описание ингресса  
