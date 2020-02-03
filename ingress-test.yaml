@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: test-ingress-nginx
+spec:
+  rules:
+  - host: test.local
+    http:
+      paths:
+      - backend:
+          serviceName: test-svc
+          servicePort: 2020
+
+

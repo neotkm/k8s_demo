@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: test-svc
+spec:
+  selector:
+    app: test
+  ports:
+    - port: 2020
+
+

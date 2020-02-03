@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-deployment
+  labels:
+    app: test-app
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: test-app
+  template:
+    metadata:
+      labels:
+        app: test-app
+    spec:
+      containers:
+      - name: test
+        image: hashicorp/http-echo
+        args:
+          - "-text=TEST2000000"
+          - "-listen=:2020"
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: test-ingress-nginx
+spec:
+  rules:
+  - host: test.local
+    http:
+      paths:
+      - backend:
+          serviceName: test-svc
+          servicePort: 2020
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: test-svc
+spec:
+  selector:
+    app: test-app
+  ports:
+    - port: 2020
