@@ -13,3 +13,18 @@ kubectl get ep
 
 
 
+---
+kubectl create ns test  
+kubectl apply -f pod-read-create-role.yaml  
+kubectl apply -f pod-read-create-rb.yaml  
+
+
+kubectl auth can-i get po --namespace test --as jsalmeron  
+kubectl auth can-i get po --namespace kube-system --as jsalmeron  
+kubectl auth can-i delete po --namespace kube-system --as jsalmeron  
+kubectl auth can-i delete po --namespace test --as jsalmeron  
+
+
+
+
+
