@@ -25,6 +25,8 @@ kubectl auth can-i delete po --namespace kube-system --as jsalmeron
 kubectl auth can-i delete po --namespace test --as jsalmeron  
 
 
+http://localhost:8001/api/v1/namespaces/kube-systems/services/https:kubernetes-dashboard:/proxy/#/secret?namespace=_all  
+
 
 
 
