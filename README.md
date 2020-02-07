@@ -8,7 +8,7 @@ kubectl apply -f pod-test.yaml -f svc-test.yaml -f ingress-test.yaml
 
 kubectl get po  
 kubectl get ing  
-kubectl get svc 
+kubectl get svc  
 kubectl get ep  
 
 
