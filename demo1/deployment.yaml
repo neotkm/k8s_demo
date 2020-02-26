@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment1
+  labels:
+    app: deployment1
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: deployment1
+  template:
+    metadata:
+      labels:
+        app: deployment1
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: demo_pod
+          image: "stefanprodan/podinfo:3.2.0"
+          imagePullPolicy: IfNotPresent
+          command:
+            - ./podinfo
+            - --port=8080
+          env:
+          - name: PODINFO_UI_MESSAGE
+            value: PODINFO_UI_MESSAGE
+#          - name: PODINFO_UI_LOGO
+#            value: {{ .Values.ui.logo }}
+          - name: PODINFO_UI_COLOR
+            value: blue
+#          - name: PODINFO_BACKEND_URL
+#            value: {{ .Values.backend }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            exec:
+              command:
+              - podcli
+              - check
+              - http
+              - localhost:8080/healthz
+            initialDelaySeconds: 1
+            timeoutSeconds: 5
+          readinessProbe:
+            exec:
+              command:
+              - podcli
+              - check
+              - http
+              - localhost:8080/readyz
+            initialDelaySeconds: 1
+            timeoutSeconds: 5
+          volumeMounts:
+          - name: data
+            mountPath: /data
+      volumes:
+      - name: data
+        emptyDir: {}
