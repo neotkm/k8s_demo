@@ -13,12 +13,9 @@ metadata:
     app: daemonset-demo
   namespace: daemonset-demo
 spec:
-  strategy:
-    #type: RollingUpdate
-    #type: Recreate
-    #rollingUpdate:
-      #maxSurge: 25%
-      #maxUnavailable: 25%
+  updateStrategy:
+    type: RollingUpdate
+    #type: OnDelete
   selector:
     matchLabels:
       app: daemonset-demo
@@ -29,7 +26,7 @@ spec:
     spec:
       containers:
       - name: daemonset-demo
-        image: neotkm/pod-healthcheck:v0.03
+        image: neotkm/pod-healthcheck:v0.04
         #imagePullPolicy: Always
         #imagePullPolicy: Never
         #imagePullPolicy: IfNotPresent
